@@ -31,7 +31,7 @@ class Query:
         rightAnswer = None
         hint = None
 
-        if freq.count(1) == 3:
+        if freq.count(1) == len(answers):
             freqDict = {}
             for item in answers:
                 for char in item:
@@ -43,12 +43,12 @@ class Query:
             rightAnswer = answers[freq.index(max(freq))]
         else:
             rightAnswer = answers[freq.index(max(freq))]
-            threshold = 30 # 前后30字符
+            threshold = 50 # 前后50字符
             hintIndex = max(knowledge.index(rightAnswer), threshold)
-            hint = knowledge[hintIndex - threshold : hintIndex + threshold]
+            hint = ''.join(knowledge[hintIndex - threshold : hintIndex + threshold].split())
         
         sum = reduce(lambda a,b : a+b, freq)
-        return [f / sum for f in freq], rightAnswer, hint.strip()
+        return [f / sum for f in freq], rightAnswer, hint
 
 
     def run(self, question, answers):
@@ -57,7 +57,8 @@ class Query:
             knowledge = self._getKnowledge(question)
         try:
             freq, rightAnswer, hint = self._query(knowledge, answers)
-        except:
+        except Exception as e:
+            print('出现异常', e)
             freq, rightAnswer, hint = [], None, None
         return freq, rightAnswer, hint
 

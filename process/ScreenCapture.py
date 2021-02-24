@@ -24,7 +24,7 @@ class ScreenCapture:
     
     # 切割
     def _splitCapture(self, img):
-        quesImg = img.crop((self.rpx(85), self.rpx(450), self.rpx(670), self.rpx(590)))
+        quesImg = img.crop((self.rpx(85), self.rpx(460), self.rpx(670), self.rpx(590)))
         ansImg = img.crop((self.rpx(85), self.rpx(590), self.rpx(670), self.rpx(1055)))
         return quesImg, ansImg
     
